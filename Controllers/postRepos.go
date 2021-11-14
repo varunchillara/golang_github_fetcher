@@ -18,6 +18,9 @@ func PostRepos(c *gin.Context) {
 		c.JSON(500, err)
 	}
 	json.Unmarshal(jsonData, &body)
-	repos := Helpers.GithubAPI(body.User)
+	repos, err := Helpers.GithubAPI(body.User)
+	if err != nil {
+		c.JSON(500, err)
+	}
 	c.JSON(200, repos)
 }
