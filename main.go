@@ -1,7 +1,7 @@
 package main
 
 import (
-	Controllers "golang_github_fetcher/Controllers"
+	"golang_github_fetcher/Controllers"
 
 	"github.com/gin-gonic/gin"
 )
