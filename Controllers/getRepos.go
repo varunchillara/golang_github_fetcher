@@ -5,5 +5,5 @@ import (
 )
 
 func GetRepos(c *gin.Context) {
-	c.String(200, "inside get repos controller")
+	c.JSON(200, "get")
 }
