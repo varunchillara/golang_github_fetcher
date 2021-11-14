@@ -2,12 +2,11 @@ package Helpers
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 )
 
-type Users []struct {
+type Repos []struct {
 	Id    int    `json:"id"`
 	Name  string `json:"name"`
 	Owner struct {
@@ -17,16 +16,16 @@ type Users []struct {
 	Watchers int    `json:"watchers"`
 }
 
-func GithubAPI(user string) Users {
+func GithubAPI(user string) (Repos, error) {
 	resp, err := http.Get("https://api.github.com/users/" + user + "/repos")
 	if err != nil {
-		fmt.Println(err)
+		return nil, err
 	}
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		fmt.Println(err)
+		return nil, err
 	}
-	users := Users{}
-	json.Unmarshal(body, &users)
-	return users
+	repos := Repos{}
+	json.Unmarshal(body, &repos)
+	return repos, nil
 }
