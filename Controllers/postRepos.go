@@ -1,9 +1,23 @@
 package Controllers
 
 import (
+	"encoding/json"
+	"golang_github_fetcher/Helpers"
+
 	"github.com/gin-gonic/gin"
 )
 
+type Body struct {
+	User string `json:user`
+}
+
 func PostRepos(c *gin.Context) {
-	c.String(200, "inside post repos controller")
+	body := Body{}
+	jsonData, err := c.GetRawData()
+	if err != nil {
+		c.JSON(500, err)
+	}
+	json.Unmarshal(jsonData, &body)
+	repos := Helpers.GithubAPI(body.User)
+	c.JSON(200, repos)
 }
